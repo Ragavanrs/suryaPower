@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import AWS from 'aws-sdk';
 import { Box, Button, TextField, Typography, CircularProgress } from '@mui/material';
 
 const Upload = () => {
@@ -9,17 +8,6 @@ const Upload = () => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState('');
-
-  // Configure AWS SDK
-  AWS.config.update({
-    accessKeyId: 'AKIA6E3K2B7VFG7RR4FV',
-    secretAccessKey: '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',
-    region: 'eu-north-1',
-  });
-
-  const s3 = new AWS.S3();
-  const bucketName = 'suryapower';
-  const folderName = 'product/';
 
   const handleFileChange = (e) => {
     setImage(e.target.files[0]);
@@ -37,17 +25,9 @@ const Upload = () => {
     }
 
     // Upload image to S3
-    const params = {
-      Bucket: bucketName,
-      Key: `${folderName}${Date.now()}_${image.name}`, // Unique key for the image
-      Body: image,
-      ContentType: image.type,
-      ACL: 'public-read', // Make the file publicly readable
-    };
+ 
 
     try {
-      const { Location } = await s3.upload(params).promise(); // Get the uploaded image URL
-      console.log('Image uploaded successfully:', Location);
 
       // Prepare the JSON data
       const productData = {
