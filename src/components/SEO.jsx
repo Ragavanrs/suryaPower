@@ -5,7 +5,7 @@ const SEO = ({
   title = 'SURYA POWER - Diesel Generator Service in Chennai',
   description = 'Leading diesel generator service provider in Chennai. Generator Rental, Sales, Repair, AMC Maintenance. 24/7 support. Call 9790987190',
   keywords = 'diesel generator service chennai, generator rental chennai, kirloskar generator service chennai, dg service near me',
-  canonical = window.location.href,
+  canonical = typeof window !== 'undefined' ? window.location.href : '',
 }) => {
   const schema = {
     '@context': 'https://schema.org',

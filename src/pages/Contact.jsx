@@ -121,11 +121,12 @@ const ContactPage = () => {
                         required: 'Phone number is required',
                         pattern: {
                           value: /^[0-9]{10}$/,
-                          message: 'Please enter a valid 10-digit phone number',
+                          message: 'Please enter a valid 10-digit phone number (without country code)',
                         },
                       })}
                       error={!!errors.phone}
                       helperText={errors.phone?.message}
+                      placeholder="e.g., 9790987190"
                       sx={{ mb: 3 }}
                     />
 
