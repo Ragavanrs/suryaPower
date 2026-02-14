@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import { HelmetProvider } from "react-helmet-async";
+import theme from "./theme/theme";
 import Header from "./components/Header";
-import Home from "./components/Home";
-import Billing from "./components/Billing";
-import Contact from "./components/Contact";
+import HomePage from "./pages/Home";
+import ServicesPage from "./pages/Services";
+import ContactPage from "./pages/Contact";
+import GalleryPage from "./pages/Gallery";
 import Loading from "./components/loading/Loading";
 import Footer from "./components/Footer";
-import Upload from "./components/upload";
-import Gallery from "./components/gallery";
+import WhatsAppFloat from "./components/WhatsAppFloat";
+import MobileCallBar from "./components/MobileCallBar";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -15,29 +20,35 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 8000); // Set loading duration to 5 seconds
+    }, 3000); // Show loading animation for 3 seconds
 
-    return () => clearTimeout(timer); // Clean up the timer
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <Router>
-      {loading ? (
-        <Loading /> // Show loading animation only during the first load
-      ) : (
-        <>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/billing" element={<Billing />} />
-            <Route path="/Contact" element={<Contact />} />
-            <Route path="/Upload" element={<Upload />} />
-            <Route path="/Gallery" element={<Gallery />} />
-          </Routes>
-          <Footer />
-        </>
-      )}
-    </Router>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <Header />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+              </Routes>
+              <Footer />
+              <WhatsAppFloat />
+              <MobileCallBar />
+            </>
+          )}
+        </Router>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
