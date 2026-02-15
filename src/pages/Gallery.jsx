@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import SEO from '../components/SEO';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { galleryImages } from '../config/galleryConfig';
 
 const GalleryPage = () => {
   const [images, setImages] = useState([]);
@@ -34,32 +35,10 @@ const GalleryPage = () => {
 
   const fetchImages = async () => {
     try {
-      const imageExtensions = ['jpg', 'jpeg', 'png'];
-      const folderPath = '/gallery/';
-      const loadedImages = [];
-
-      for (let i = 1; i <= 50; i++) {
-        for (const ext of imageExtensions) {
-          const imagePath = `${folderPath}gal${i}.${ext}`;
-          try {
-            const img = new Image();
-            img.src = imagePath;
-            await new Promise((resolve, reject) => {
-              img.onload = () => {
-                loadedImages.push({
-                  url: imagePath,
-                  category: i % 5 === 0 ? 'rental' : i % 4 === 0 ? 'installation' : i % 3 === 0 ? 'repair' : i % 2 === 0 ? 'panels' : 'events',
-                });
-                resolve();
-              };
-              img.onerror = reject;
-              setTimeout(reject, 1000);
-            });
-          } catch (error) {
-            continue;
-          }
-        }
-      }
+      const loadedImages = galleryImages.map((item) => ({
+        url: `/gallery/${item.file}`,
+        category: item.category,
+      }));
 
       setImages(loadedImages);
       setLoading(false);

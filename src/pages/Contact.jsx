@@ -20,7 +20,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
 import SEO from '../components/SEO';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 
 const ContactPage = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -31,18 +30,32 @@ const ContactPage = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    try {
-      await axios.post('/api/contact', data);
-      setSubmitStatus({ type: 'success', message: 'Thank you! We will contact you soon.' });
+    // Open WhatsApp with pre-filled message as the primary contact method
+    const phoneNumber = '919790987190';
+    const whatsappMessage = encodeURIComponent(
+      `Hi! I need ${data.service}.\n\n` +
+      `Name: ${data.name}\n` +
+      `Phone: ${data.phone}\n` +
+      `Location: ${data.location}\n` +
+      `Message: ${data.message}`
+    );
+    
+    const whatsappWindow = window.open(`https://wa.me/${phoneNumber}?text=${whatsappMessage}`, '_blank');
+    
+    if (whatsappWindow) {
+      setSubmitStatus({ 
+        type: 'success', 
+        message: 'Redirecting to WhatsApp. Please send the message to complete your request.' 
+      });
       reset();
-    } catch (error) {
+    } else {
       setSubmitStatus({ 
         type: 'error', 
-        message: 'Failed to send message. Please call us directly or try again.' 
+        message: 'Could not open WhatsApp. Please call us directly at 9790987190.' 
       });
-    } finally {
-      setIsSubmitting(false);
     }
+    
+    setIsSubmitting(false);
   };
 
   const handleWhatsAppClick = () => {

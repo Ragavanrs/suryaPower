@@ -25,26 +25,49 @@ const Header = () => {
 
   // Drawer content for mobile menu
   const drawerContent = (
-    <Box sx={{ width: 250 }} onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 250, backgroundColor: '#111827', height: '100%' }} onClick={toggleDrawer(false)}>
+      <Box sx={{ p: 2, borderBottom: '1px solid rgba(255, 193, 7, 0.2)' }}>
+        <Typography variant="h6" sx={{ color: '#FFC107', fontWeight: 700 }}>
+          SURYA POWER
+        </Typography>
+      </Box>
       <List>
-        <ListItem button component={Link} to="/">
-          <ListItemText primary="Home" />
+        <ListItem button component={Link} to="/" sx={{ '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' } }}>
+          <ListItemText primary="Home" sx={{ color: '#FFFFFF' }} />
         </ListItem>
-        <ListItem button component={Link} to="/services">
-          <ListItemText primary="Services" />
+        <ListItem button component={Link} to="/services" sx={{ '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' } }}>
+          <ListItemText primary="Services" sx={{ color: '#FFFFFF' }} />
         </ListItem>
-        <ListItem button component={Link} to="/gallery">
-          <ListItemText primary="Gallery" />
+        <ListItem button component={Link} to="/gallery" sx={{ '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' } }}>
+          <ListItemText primary="Gallery" sx={{ color: '#FFFFFF' }} />
         </ListItem>
-        <ListItem button component={Link} to="/contact">
-          <ListItemText primary="Contact Us" />
+        <ListItem button component={Link} to="/contact" sx={{ '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' } }}>
+          <ListItemText primary="Contact Us" sx={{ color: '#FFFFFF' }} />
         </ListItem>
       </List>
+      <Box sx={{ p: 2, mt: 2 }}>
+        <Button
+          variant="contained"
+          fullWidth
+          startIcon={<PhoneIcon />}
+          href="tel:+919790987190"
+          sx={{
+            backgroundColor: '#FFC107',
+            color: '#111827',
+            fontWeight: 700,
+            '&:hover': {
+              backgroundColor: '#FFA000',
+            },
+          }}
+        >
+          Call Now
+        </Button>
+      </Box>
     </Box>
   );
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#1F2937' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#111827', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
       <Toolbar>
         {/* Logo and Company Name Section */}
         <Box display="flex" alignItems="center" flexGrow={1}>
@@ -55,16 +78,48 @@ const Header = () => {
         {/* Navigation for large screens */}
         {!isMobile ? (
           <Box display="flex" alignItems="center" gap={1}>
-            <Button color="inherit" component={Link} to="/">
+            <Button 
+              color="inherit" 
+              component={Link} 
+              to="/"
+              sx={{ 
+                color: '#FFFFFF',
+                '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' }
+              }}
+            >
               Home
             </Button>
-            <Button color="inherit" component={Link} to="/services">
+            <Button 
+              color="inherit" 
+              component={Link} 
+              to="/services"
+              sx={{ 
+                color: '#FFFFFF',
+                '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' }
+              }}
+            >
               Services
             </Button>
-            <Button color="inherit" component={Link} to="/gallery">
+            <Button 
+              color="inherit" 
+              component={Link} 
+              to="/gallery"
+              sx={{ 
+                color: '#FFFFFF',
+                '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' }
+              }}
+            >
               Gallery
             </Button>
-            <Button color="inherit" component={Link} to="/contact">
+            <Button 
+              color="inherit" 
+              component={Link} 
+              to="/contact"
+              sx={{ 
+                color: '#FFFFFF',
+                '&:hover': { backgroundColor: 'rgba(255, 193, 7, 0.1)' }
+              }}
+            >
               Contact Us
             </Button>
             <Button
