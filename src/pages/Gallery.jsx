@@ -34,32 +34,24 @@ const GalleryPage = () => {
 
   const fetchImages = async () => {
     try {
-      const imageExtensions = ['jpg', 'jpeg', 'png'];
-      const folderPath = '/gallery/';
-      const loadedImages = [];
+      // List of images that actually exist in the gallery folder
+      const imageFiles = [
+        { file: 'gal1.jpg', category: 'events' },
+        { file: 'gal2.jpg', category: 'panels' },
+        { file: 'gal3.jpg', category: 'repair' },
+        { file: 'gal4.jpg', category: 'installation' },
+        { file: 'gal5.jpg', category: 'rental' },
+        { file: 'gal6.jpeg', category: 'panels' },
+        { file: 'gal7.jpeg', category: 'repair' },
+        { file: 'gal8.jpeg', category: 'installation' },
+        { file: 'gal9.jpeg', category: 'rental' },
+        { file: 'gal10.jpeg', category: 'events' },
+      ];
 
-      for (let i = 1; i <= 50; i++) {
-        for (const ext of imageExtensions) {
-          const imagePath = `${folderPath}gal${i}.${ext}`;
-          try {
-            const img = new Image();
-            img.src = imagePath;
-            await new Promise((resolve, reject) => {
-              img.onload = () => {
-                loadedImages.push({
-                  url: imagePath,
-                  category: i % 5 === 0 ? 'rental' : i % 4 === 0 ? 'installation' : i % 3 === 0 ? 'repair' : i % 2 === 0 ? 'panels' : 'events',
-                });
-                resolve();
-              };
-              img.onerror = reject;
-              setTimeout(reject, 1000);
-            });
-          } catch (error) {
-            continue;
-          }
-        }
-      }
+      const loadedImages = imageFiles.map((item) => ({
+        url: `/gallery/${item.file}`,
+        category: item.category,
+      }));
 
       setImages(loadedImages);
       setLoading(false);

@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000); // Show loading animation for 3 seconds
+    }, 1500); // Show loading animation for 1.5 seconds
 
     return () => clearTimeout(timer);
   }, []);

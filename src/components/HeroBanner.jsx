@@ -26,7 +26,7 @@ const HeroBanner = () => {
         minHeight: { xs: '60vh', md: '70vh' },
         display: 'flex',
         alignItems: 'center',
-        backgroundImage: 'linear-gradient(rgba(31, 41, 55, 0.7), rgba(31, 41, 55, 0.7)), url(/carousel/image3.jpeg)',
+        backgroundImage: 'linear-gradient(rgba(31, 41, 55, 0.7), rgba(31, 41, 55, 0.7)), url(/carousel/image1.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: { md: 'fixed' },

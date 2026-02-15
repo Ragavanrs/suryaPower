@@ -1,34 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Typography } from '@mui/material';
-import './Loading.css'; // Create this CSS file for your styles
+import './Loading.css';
 
 const Loading = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 5000); // 5 seconds
-
-    return () => clearTimeout(timer); // Clean up the timer
-  }, []);
-
   return (
-    <Box className={`loading-container ${loading ? 'fade-in' : 'fade-out'}`}>
-      <video autoPlay loop muted className="background-video">
-        <source src="/intro.mp4" type="video/mp4" /> {/* Adjust the path */}
-        Your browser does not support the video tag.
-      </video>
+    <Box className="loading-container">
       <div className="icon-container">
-        {loading && (
-          <img src="/sunny.png" alt="Loading..." className="sun-loader" />
-        )}
+        <img src="/sunny.png" alt="Loading..." className="sun-loader" />
+        <Typography variant="h3" className="fade-in-text" sx={{ mt: 4 }}>
+          SURYA POWER
+        </Typography>
+        <Typography variant="h6" className="fade-in-subtitle" sx={{ mt: 2, color: '#FFC107' }}>
+          Power Backup Solutions
+        </Typography>
       </div>
-      {!loading && (
-        <Typography variant="h2" className="fade-in-text">
-        Surya Power
-      </Typography>
-      )}
     </Box>
   );
 };
