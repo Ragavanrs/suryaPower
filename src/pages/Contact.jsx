@@ -20,7 +20,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
 import SEO from '../components/SEO';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 
 const ContactPage = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
