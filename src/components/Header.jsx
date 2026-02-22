@@ -60,7 +60,7 @@ const Header = () => {
             aria-current={isCurrent(to) ? 'page' : undefined}
             sx={{ '&:hover': { backgroundColor: 'rgba(216, 67, 21, 0.1)' } }}
           >
-            <ListItemText primary={label} sx={{ color: '#FFFFFF' }} />
+            <ListItemText primary={label} primaryTypographyProps={{ style: { color: '#FFFFFF' } }} />
           </ListItem>
         ))}
       </List>
