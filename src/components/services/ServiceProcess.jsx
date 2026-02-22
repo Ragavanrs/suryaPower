@@ -1,0 +1,51 @@
+import React from 'react';
+import { Box, Container, Grid, Card, CardContent, Typography } from '@mui/material';
+import SectionTitle from '../common/SectionTitle';
+
+const ServiceProcess = ({ steps = [] }) => {
+  return (
+    <Box
+      component="section"
+      aria-labelledby="process-heading"
+      sx={{ py: { xs: 6, md: 8 }, backgroundColor: '#FFFFFF' }}
+      data-aos="fade-up"
+    >
+      <Container maxWidth="lg">
+        <SectionTitle id="process-heading" title="How It Works" />
+        <Grid container spacing={3}>
+          {steps.map((step, index) => (
+            <Grid item xs={12} sm={6} md={Math.floor(12 / Math.min(steps.length, 4))} key={step}>
+              <Card sx={{ textAlign: 'center', height: '100%' }}>
+                <CardContent sx={{ py: 4 }}>
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: '50%',
+                      backgroundColor: '#D84315',
+                      color: '#FFFFFF',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      mx: 'auto',
+                      mb: 2,
+                      fontWeight: 700,
+                      fontSize: '1.2rem',
+                    }}
+                  >
+                    {index + 1}
+                  </Box>
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    {step}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
+
+export default ServiceProcess;

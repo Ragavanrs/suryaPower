@@ -1,35 +1,26 @@
-import React, { useEffect } from 'react';
-import { Box, Container, Typography, Grid, Card, CardContent, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Box, Container, Typography, Grid, Card, CardContent, Button, Breadcrumbs, Link as MuiLink } from '@mui/material';
+import { Link } from 'react-router-dom';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import BuildIcon from '@mui/icons-material/Build';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import InstallationIcon from '@mui/icons-material/Construction';
-import SEO from '../components/SEO';
+import SEO from '../components/common/SEO';
 import CTASection from '../components/CTASection';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { SITE_CONFIG } from '../config/siteConfig';
+import useAOS from '../hooks/useAOS';
 
 const ServicesPage = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  }, []);
-
-  const handleRequestQuote = () => {
-    navigate('/contact');
-  };
+  useAOS();
 
   const services = [
     {
-      icon: <LocalShippingIcon sx={{ fontSize: 80, color: '#FFC107' }} />,
+      icon: <LocalShippingIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Generator Rental',
       description: 'Flexible rental solutions for temporary power backup needs',
+      path: '/services/rental',
       details: [
         'All capacities: 5kVA to 1250kVA',
         'Short-term and long-term rental options',
@@ -40,9 +31,10 @@ const ServicesPage = () => {
       ],
     },
     {
-      icon: <BuildIcon sx={{ fontSize: 80, color: '#FFC107' }} />,
+      icon: <BuildIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Generator Sales',
       description: 'New and refurbished diesel generators from trusted brands',
+      path: '/services/sales',
       details: [
         'Kirloskar generators',
         'Cummins generators',
@@ -53,9 +45,10 @@ const ServicesPage = () => {
       ],
     },
     {
-      icon: <SettingsIcon sx={{ fontSize: 80, color: '#FFC107' }} />,
+      icon: <SettingsIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Breakdown Service',
       description: '24/7 emergency repair and breakdown support',
+      path: '/services/repair',
       details: [
         'Round-the-clock availability',
         'Fast response time',
@@ -66,22 +59,10 @@ const ServicesPage = () => {
       ],
     },
     {
-      icon: <AssignmentIcon sx={{ fontSize: 80, color: '#FFC107' }} />,
-      title: 'Preventive Maintenance',
-      description: 'Regular maintenance to prevent breakdowns and extend life',
-      details: [
-        'Scheduled maintenance visits',
-        'Oil and filter changes',
-        'Battery checks and replacement',
-        'Cooling system maintenance',
-        'Electrical system inspection',
-        'Performance testing',
-      ],
-    },
-    {
-      icon: <AssignmentIcon sx={{ fontSize: 80, color: '#FFC107' }} />,
+      icon: <AssignmentIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Annual Maintenance Contract',
       description: 'Comprehensive AMC packages for worry-free operation',
+      path: '/services/amc',
       details: [
         'Regular preventive maintenance',
         'Priority breakdown service',
@@ -92,9 +73,24 @@ const ServicesPage = () => {
       ],
     },
     {
-      icon: <InstallationIcon sx={{ fontSize: 80, color: '#FFC107' }} />,
+      icon: <AssignmentIcon sx={{ fontSize: 80, color: '#D84315' }} />,
+      title: 'Preventive Maintenance',
+      description: 'Regular maintenance to prevent breakdowns and extend life',
+      path: '/contact',
+      details: [
+        'Scheduled maintenance visits',
+        'Oil and filter changes',
+        'Battery checks and replacement',
+        'Cooling system maintenance',
+        'Electrical system inspection',
+        'Performance testing',
+      ],
+    },
+    {
+      icon: <InstallationIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Installation Services',
       description: 'Professional installation and commissioning of generators',
+      path: '/contact',
       details: [
         'Site survey and planning',
         'Foundation work coordination',
@@ -108,26 +104,38 @@ const ServicesPage = () => {
 
   return (
     <Box>
-      <SEO 
-        title="Diesel Generator Services in Chennai - SURYA POWER"
+      <SEO
+        title="Diesel Generator Services in Chennai"
         description="Comprehensive diesel generator services: Rental, Sales, Repair, AMC, Installation. Expert service with genuine parts. Call 9790987190 for quote."
+        canonical={`${SITE_CONFIG.url}/services`}
       />
-      
+
       {/* Page Header */}
       <Box
+        component="header"
         sx={{
-          backgroundColor: '#1F2937',
+          backgroundColor: '#1C2B3A',
           py: { xs: 6, md: 8 },
           color: '#FFFFFF',
         }}
       >
         <Container maxWidth="lg">
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" sx={{ color: '#D1D5DB' }} />}
+            aria-label="breadcrumb"
+            sx={{ mb: 3 }}
+          >
+            <MuiLink component={Link} to="/" sx={{ color: '#D1D5DB', textDecoration: 'none', '&:hover': { color: '#FF6E40' } }}>
+              Home
+            </MuiLink>
+            <Typography sx={{ color: '#FF6E40' }}>Services</Typography>
+          </Breadcrumbs>
           <Typography
-            variant="h2"
+            variant="h1"
             component="h1"
             align="center"
             gutterBottom
-            sx={{ fontWeight: 700 }}
+            sx={{ fontWeight: 700, color: '#FFFFFF' }}
           >
             Our Services
           </Typography>
@@ -142,11 +150,11 @@ const ServicesPage = () => {
       </Box>
 
       {/* Services Grid */}
-      <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: '#F5F7FA' }}>
+      <Box component="main" sx={{ py: { xs: 6, md: 8 }, backgroundColor: '#F5F7FA' }}>
         <Container maxWidth="lg">
           <Grid container spacing={6}>
             {services.map((service, index) => (
-              <Grid item xs={12} md={6} key={index} data-aos="fade-up" data-aos-delay={index * 100}>
+              <Grid item xs={12} md={6} key={service.title} data-aos="fade-up" data-aos-delay={index * 100}>
                 <Card
                   sx={{
                     height: '100%',
@@ -179,11 +187,11 @@ const ServicesPage = () => {
                       {service.description}
                     </Typography>
                     <Box component="ul" sx={{ pl: 2, mb: 3 }}>
-                      {service.details.map((detail, idx) => (
+                      {service.details.map((detail) => (
                         <Typography
                           component="li"
                           variant="body2"
-                          key={idx}
+                          key={detail}
                           sx={{ mb: 1 }}
                         >
                           {detail}
@@ -193,17 +201,16 @@ const ServicesPage = () => {
                     <Button
                       variant="contained"
                       fullWidth
-                      onClick={handleRequestQuote}
+                      component={Link}
+                      to={service.path}
                       sx={{
-                        backgroundColor: '#FFC107',
-                        color: '#111827',
+                        backgroundColor: '#D84315',
+                        color: '#FFFFFF',
                         fontWeight: 700,
-                        '&:hover': {
-                          backgroundColor: '#FFA000',
-                        },
+                        '&:hover': { backgroundColor: '#BF360C' },
                       }}
                     >
-                      Request Quote
+                      Learn More
                     </Button>
                   </CardContent>
                 </Card>

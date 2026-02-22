@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import SEO from '../components/SEO';
+import SEO from '../components/common/SEO';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { galleryImages } from '../config/galleryConfig';
