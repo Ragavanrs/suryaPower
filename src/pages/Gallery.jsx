@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Box,
   Container,
@@ -7,13 +7,14 @@ import {
   Card,
   CardMedia,
   Dialog,
+  DialogTitle,
   IconButton,
   Tabs,
   Tab,
   CircularProgress,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import SEO from '../components/SEO';
+import SEO from '../components/common/SEO';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { galleryImages } from '../config/galleryConfig';
@@ -26,9 +27,12 @@ const GalleryPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
 
   useEffect(() => {
+    const prefersReducedMotion =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     AOS.init({
       duration: 1000,
       once: true,
+      disable: prefersReducedMotion,
     });
     fetchImages();
   }, []);
@@ -38,8 +42,8 @@ const GalleryPage = () => {
       const loadedImages = galleryImages.map((item) => ({
         url: `/gallery/${item.file}`,
         category: item.category,
+        label: item.label,
       }));
-
       setImages(loadedImages);
       setLoading(false);
     } catch (err) {
@@ -48,15 +52,15 @@ const GalleryPage = () => {
     }
   };
 
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
+  const handleImageClick = useCallback((image) => {
+    setSelectedImage(image);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedImage(null);
-  };
+  }, []);
 
   const handleFilterChange = (event, newValue) => {
     setActiveFilter(newValue);
@@ -68,13 +72,14 @@ const GalleryPage = () => {
 
   return (
     <Box>
-      <SEO 
+      <SEO
         title="Gallery - SURYA POWER Diesel Generator Projects in Chennai"
         description="View our diesel generator installation, rental, and service projects in Chennai. Real work showcasing quality installations and repairs."
       />
-      
+
       {/* Page Header */}
       <Box
+        component="header"
         sx={{
           backgroundColor: '#1F2937',
           py: { xs: 6, md: 8 },
@@ -109,16 +114,18 @@ const GalleryPage = () => {
             onChange={handleFilterChange}
             variant="scrollable"
             scrollButtons="auto"
+            aria-label="Filter gallery images by category"
             sx={{
               '& .MuiTab-root': {
                 fontWeight: 600,
                 fontSize: '1rem',
               },
+              // #BF360C on white = 5.6:1 contrast ratio — passes WCAG AA (WCAG 1.4.3)
               '& .Mui-selected': {
-                color: '#FFC107',
+                color: '#BF360C',
               },
               '& .MuiTabs-indicator': {
-                backgroundColor: '#FFC107',
+                backgroundColor: '#BF360C',
               },
             }}
           >
@@ -133,19 +140,46 @@ const GalleryPage = () => {
       </Box>
 
       {/* Gallery Grid */}
-      <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: '#F5F7FA' }}>
+      <Box
+        component="section"
+        aria-label="Gallery images"
+        sx={{ py: { xs: 6, md: 8 }, backgroundColor: '#F5F7FA' }}
+      >
         <Container maxWidth="lg">
           {loading ? (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-              <CircularProgress sx={{ color: '#FFC107' }} />
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="60vh"
+              role="status"
+              aria-live="polite"
+              aria-label="Loading gallery images"
+            >
+              <CircularProgress sx={{ color: '#D84315' }} aria-hidden="true" />
             </Box>
           ) : (
             <Grid container spacing={3}>
               {filteredImages.length > 0 ? (
                 filteredImages.map((image, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index} data-aos="fade-up" data-aos-delay={index % 9 * 50}>
+                  <Grid
+                    item
+                    xs={12} sm={6} md={4}
+                    key={index}
+                    data-aos="fade-up"
+                    data-aos-delay={index % 9 * 50}
+                  >
                     <Card
-                      onClick={() => handleImageClick(image.url)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Open: ${image.label}`}
+                      onClick={() => handleImageClick(image)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleImageClick(image);
+                        }
+                      }}
                       sx={{
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
@@ -153,12 +187,16 @@ const GalleryPage = () => {
                           transform: 'scale(1.05)',
                           boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.2)',
                         },
+                        '&:focus-visible': {
+                          outline: '3px solid #D84315',
+                          outlineOffset: '3px',
+                        },
                       }}
                     >
                       <CardMedia
                         component="img"
                         image={image.url}
-                        alt={`Gallery Image ${index + 1}`}
+                        alt={image.label}
                         sx={{
                           height: 250,
                           objectFit: 'cover',
@@ -185,6 +223,7 @@ const GalleryPage = () => {
         open={isModalOpen}
         onClose={handleCloseModal}
         maxWidth="lg"
+        aria-labelledby="gallery-modal-title"
         PaperProps={{
           sx: {
             backgroundColor: 'transparent',
@@ -192,9 +231,15 @@ const GalleryPage = () => {
           },
         }}
       >
+        {/* Visually hidden title for screen readers */}
+        <DialogTitle id="gallery-modal-title" sx={{ display: 'none' }}>
+          {selectedImage?.label ?? 'Gallery image'}
+        </DialogTitle>
+
         <Box position="relative">
           <IconButton
             onClick={handleCloseModal}
+            aria-label="Close image preview"
             sx={{
               position: 'absolute',
               top: 8,
@@ -207,19 +252,21 @@ const GalleryPage = () => {
               },
             }}
           >
-            <CloseIcon />
+            <CloseIcon aria-hidden="true" />
           </IconButton>
-          <Box
-            component="img"
-            src={selectedImage}
-            alt="Selected"
-            sx={{
-              width: '100%',
-              height: 'auto',
-              maxHeight: '90vh',
-              objectFit: 'contain',
-            }}
-          />
+          {selectedImage && (
+            <Box
+              component="img"
+              src={selectedImage.url}
+              alt={selectedImage.label}
+              sx={{
+                width: '100%',
+                height: 'auto',
+                maxHeight: '90vh',
+                objectFit: 'contain',
+              }}
+            />
+          )}
         </Box>
       </Dialog>
     </Box>

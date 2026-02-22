@@ -4,21 +4,15 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FFC107', // Generator Yellow
-      light: '#FFD54F',
-      dark: '#FFA000',
-      contrastText: '#111827',
-    },
-    secondary: {
-      main: '#1F2937', // Steel Dark
-      light: '#374151',
-      dark: '#111827',
+      main: '#D84315', // Deep Orange
+      light: '#FF6E40',
+      dark: '#BF360C',
       contrastText: '#FFFFFF',
     },
-    accent: {
-      main: '#0EA5E9', // Electric Blue
-      light: '#38BDF8',
-      dark: '#0284C7',
+    secondary: {
+      main: '#1C2B3A', // Dark steel navy
+      light: '#2E3F4F',
+      dark: '#0F1C28',
       contrastText: '#FFFFFF',
     },
     background: {
@@ -35,28 +29,28 @@ const theme = createTheme({
     h1: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 700,
-      fontSize: '3rem',
+      fontSize: 'clamp(2rem, 5vw, 3rem)',
       lineHeight: 1.2,
       color: '#111827',
     },
     h2: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 700,
-      fontSize: '2.5rem',
+      fontSize: 'clamp(1.6rem, 4vw, 2.5rem)',
       lineHeight: 1.3,
       color: '#111827',
     },
     h3: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 600,
-      fontSize: '2rem',
+      fontSize: 'clamp(1.3rem, 3vw, 2rem)',
       lineHeight: 1.3,
       color: '#111827',
     },
     h4: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 600,
-      fontSize: '1.5rem',
+      fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
       lineHeight: 1.4,
       color: '#111827',
     },
@@ -89,8 +83,8 @@ const theme = createTheme({
     button: {
       fontFamily: '"Poppins", sans-serif',
       fontWeight: 600,
-      textTransform: 'uppercase',
-      letterSpacing: '0.5px',
+      textTransform: 'none',
+      letterSpacing: '0.3px',
     },
   },
   shape: {
@@ -124,13 +118,27 @@ const theme = createTheme({
     '0px 48px 96px rgba(0, 0, 0, 0.58)',
   ],
   components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          // Ensure a strong, visible focus ring for keyboard navigation (WCAG 2.4.7)
+          '&:focus-visible': {
+            outline: '3px solid #D84315',
+            outlineOffset: '3px',
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          padding: '12px 32px',
+          borderRadius: 8,
+          padding: '10px 28px',
           fontWeight: 700,
-          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
+          // Shadow is intentionally 'none' at rest per the Surya Power design spec
+          // (Section 6: MuiButton override). A prominent lift shadow is applied on hover
+          // to preserve visual affordance without cluttering the default state.
+          boxShadow: 'none',
           transition: 'all 0.3s ease',
           '&:hover': {
             transform: 'translateY(-2px)',
@@ -142,13 +150,6 @@ const theme = createTheme({
             boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.2)',
           },
         },
-        containedPrimary: {
-          backgroundColor: '#FFC107',
-          color: '#111827',
-          '&:hover': {
-            backgroundColor: '#FFA000',
-          },
-        },
       },
     },
     MuiCard: {
@@ -156,7 +157,7 @@ const theme = createTheme({
         root: {
           borderRadius: 12,
           boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)',
-          transition: 'all 0.3s ease',
+          transition: 'box-shadow 0.3s ease, transform 0.3s ease',
           '&:hover': {
             boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.12)',
             transform: 'translateY(-4px)',

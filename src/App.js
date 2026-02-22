@@ -1,51 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { HelmetProvider } from "react-helmet-async";
 import theme from "./theme/theme";
-import Header from "./components/Header";
-import HomePage from "./pages/Home";
-import ServicesPage from "./pages/Services";
-import ContactPage from "./pages/Contact";
-import GalleryPage from "./pages/Gallery";
-import Loading from "./components/loading/Loading";
-import Footer from "./components/Footer";
-import WhatsAppFloat from "./components/WhatsAppFloat";
-import MobileCallBar from "./components/MobileCallBar";
+import Layout from "./components/layout/Layout";
+import Loading from "./components/layout/Loading";
+import ErrorBoundary from "./components/common/ErrorBoundary";
+import ScrollToTop from "./components/common/ScrollToTop";
+
+const HomePage = lazy(() => import("./pages/Home"));
+const ServicesPage = lazy(() => import("./pages/Services"));
+const ContactPage = lazy(() => import("./pages/Contact"));
+const GalleryPage = lazy(() => import("./pages/Gallery"));
+const GeneratorRental = lazy(() => import("./pages/services/GeneratorRental"));
+const GeneratorRepair = lazy(() => import("./pages/services/GeneratorRepair"));
+const GeneratorAMC = lazy(() => import("./pages/services/GeneratorAMC"));
+const GeneratorSales = lazy(() => import("./pages/services/GeneratorSales"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500); // Show loading animation for 1.5 seconds
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <HelmetProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              <Header />
+          <ScrollToTop />
+          <ErrorBoundary>
+            <Suspense fallback={<Loading />}>
               <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/services" element={<ServicesPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/gallery" element={<GalleryPage />} />
+                <Route element={<Layout />}>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/services/rental" element={<GeneratorRental />} />
+                  <Route path="/services/repair" element={<GeneratorRepair />} />
+                  <Route path="/services/amc" element={<GeneratorAMC />} />
+                  <Route path="/services/sales" element={<GeneratorSales />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/gallery" element={<GalleryPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Route>
               </Routes>
-              <Footer />
-              <WhatsAppFloat />
-              <MobileCallBar />
-            </>
-          )}
+            </Suspense>
+          </ErrorBoundary>
         </Router>
       </ThemeProvider>
     </HelmetProvider>

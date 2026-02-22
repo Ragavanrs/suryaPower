@@ -7,18 +7,20 @@ import EventIcon from '@mui/icons-material/Event';
 import BusinessIcon from '@mui/icons-material/Business';
 import ComputerIcon from '@mui/icons-material/Computer';
 
-const IndustryGrid = () => {
-  const industries = [
-    { icon: <LocalHospitalIcon sx={{ fontSize: 48 }} />, name: 'Hospitals' },
-    { icon: <ApartmentIcon sx={{ fontSize: 48 }} />, name: 'Apartments' },
-    { icon: <FactoryIcon sx={{ fontSize: 48 }} />, name: 'Factories' },
-    { icon: <EventIcon sx={{ fontSize: 48 }} />, name: 'Events' },
-    { icon: <BusinessIcon sx={{ fontSize: 48 }} />, name: 'Commercial Buildings' },
-    { icon: <ComputerIcon sx={{ fontSize: 48 }} />, name: 'IT Offices' },
-  ];
+const industries = [
+  { icon: <LocalHospitalIcon sx={{ fontSize: 48 }} aria-hidden="true" />, name: 'Hospitals' },
+  { icon: <ApartmentIcon sx={{ fontSize: 48 }} aria-hidden="true" />,      name: 'Apartments' },
+  { icon: <FactoryIcon sx={{ fontSize: 48 }} aria-hidden="true" />,         name: 'Factories' },
+  { icon: <EventIcon sx={{ fontSize: 48 }} aria-hidden="true" />,           name: 'Events' },
+  { icon: <BusinessIcon sx={{ fontSize: 48 }} aria-hidden="true" />,        name: 'Commercial Buildings' },
+  { icon: <ComputerIcon sx={{ fontSize: 48 }} aria-hidden="true" />,        name: 'IT Offices' },
+];
 
+const IndustryGrid = () => {
   return (
     <Box
+      component="section"
+      aria-labelledby="industries-heading"
       sx={{
         py: { xs: 6, md: 8 },
         backgroundColor: '#FFFFFF',
@@ -26,6 +28,7 @@ const IndustryGrid = () => {
     >
       <Container maxWidth="lg">
         <Typography
+          id="industries-heading"
           variant="h3"
           component="h2"
           align="center"
@@ -35,16 +38,15 @@ const IndustryGrid = () => {
           Industries We Serve
         </Typography>
         <Grid container spacing={3}>
-          {industries.map((industry, index) => (
-            <Grid item xs={6} sm={4} md={2} key={index}>
+          {industries.map((industry) => (
+            <Grid item xs={6} sm={4} md={2} key={industry.name}>
+              {/* Purely informational card — not interactive */}
               <Card
                 sx={{
                   textAlign: 'center',
                   height: '100%',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
+                  transition: 'box-shadow 0.3s ease',
                   '&:hover': {
-                    transform: 'scale(1.05)',
                     boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.15)',
                   },
                 }}
