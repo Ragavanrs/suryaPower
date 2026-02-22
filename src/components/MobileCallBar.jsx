@@ -7,19 +7,17 @@ import { SITE_CONFIG } from '../config/siteConfig';
 const MobileCallBar = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
 
-  const handleCallClick = useCallback(() => {
-    window.location.href = `tel:${SITE_CONFIG.phone}`;
-  }, []);
-
   const handleWhatsAppClick = useCallback(() => {
     const message = encodeURIComponent('Hi! I need diesel generator service.');
-    window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank', 'noopener,noreferrer');
   }, []);
 
   if (!isMobile) return null;
 
   return (
     <Box
+      component="nav"
+      aria-label="Quick contact actions"
       sx={{
         position: 'fixed',
         bottom: 0,
@@ -33,8 +31,9 @@ const MobileCallBar = () => {
     >
       <Button
         fullWidth
-        onClick={handleCallClick}
-        startIcon={<PhoneIcon />}
+        component="a"
+        href={`tel:${SITE_CONFIG.phone}`}
+        startIcon={<PhoneIcon aria-hidden="true" />}
         sx={{
           py: 2,
           borderRadius: 0,
@@ -42,9 +41,7 @@ const MobileCallBar = () => {
           color: '#FFFFFF',
           fontWeight: 700,
           fontSize: '1rem',
-          '&:hover': {
-            backgroundColor: '#BF360C',
-          },
+          '&:hover': { backgroundColor: '#BF360C' },
         }}
       >
         Call Now
@@ -52,7 +49,7 @@ const MobileCallBar = () => {
       <Button
         fullWidth
         onClick={handleWhatsAppClick}
-        startIcon={<WhatsAppIcon />}
+        startIcon={<WhatsAppIcon aria-hidden="true" />}
         sx={{
           py: 2,
           borderRadius: 0,
@@ -60,9 +57,7 @@ const MobileCallBar = () => {
           color: '#FFFFFF',
           fontWeight: 700,
           fontSize: '1rem',
-          '&:hover': {
-            backgroundColor: '#20BA5A',
-          },
+          '&:hover': { backgroundColor: '#20BA5A' },
         }}
       >
         WhatsApp

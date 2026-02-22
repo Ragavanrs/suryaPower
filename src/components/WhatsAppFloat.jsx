@@ -6,15 +6,15 @@ import { SITE_CONFIG } from '../config/siteConfig';
 const WhatsAppFloat = () => {
   const handleWhatsAppClick = useCallback(() => {
     const message = encodeURIComponent('Hi! I need diesel generator service.');
-    window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank', 'noopener,noreferrer');
   }, []);
 
   return (
     <Tooltip title="Chat on WhatsApp" placement="left">
       <Fab
         color="success"
-        aria-label="WhatsApp"
         onClick={handleWhatsAppClick}
+        aria-label="Chat on WhatsApp — opens in a new tab"
         sx={{
           position: 'fixed',
           bottom: { xs: 80, md: 24 },
@@ -30,7 +30,7 @@ const WhatsAppFloat = () => {
           boxShadow: '0px 4px 12px rgba(37, 211, 102, 0.4)',
         }}
       >
-        <WhatsAppIcon fontSize="large" />
+        <WhatsAppIcon fontSize="large" aria-hidden="true" />
       </Fab>
     </Tooltip>
   );

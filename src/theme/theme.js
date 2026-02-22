@@ -118,6 +118,17 @@ const theme = createTheme({
     '0px 48px 96px rgba(0, 0, 0, 0.58)',
   ],
   components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          // Ensure a strong, visible focus ring for keyboard navigation (WCAG 2.4.7)
+          '&:focus-visible': {
+            outline: '3px solid #D84315',
+            outlineOffset: '3px',
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

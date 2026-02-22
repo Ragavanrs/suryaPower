@@ -5,32 +5,34 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import FlashOnIcon from '@mui/icons-material/FlashOn';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
-const TrustIndicators = () => {
-  const indicators = [
-    {
-      icon: <WorkHistoryIcon sx={{ fontSize: 48 }} />,
-      title: '10+ Years Experience',
-      description: 'Serving Chennai since 2009',
-    },
-    {
-      icon: <SupportAgentIcon sx={{ fontSize: 48 }} />,
-      title: '24/7 Service',
-      description: 'Round-the-clock support',
-    },
-    {
-      icon: <FlashOnIcon sx={{ fontSize: 48 }} />,
-      title: 'Fast Installation',
-      description: 'Quick setup and deployment',
-    },
-    {
-      icon: <VerifiedIcon sx={{ fontSize: 48 }} />,
-      title: 'Genuine Spare Parts',
-      description: 'Only authentic components',
-    },
-  ];
+const indicators = [
+  {
+    icon: <WorkHistoryIcon sx={{ fontSize: 48 }} aria-hidden="true" />,
+    title: '10+ Years Experience',
+    description: 'Serving Chennai since 2009',
+  },
+  {
+    icon: <SupportAgentIcon sx={{ fontSize: 48 }} aria-hidden="true" />,
+    title: '24/7 Service',
+    description: 'Round-the-clock support',
+  },
+  {
+    icon: <FlashOnIcon sx={{ fontSize: 48 }} aria-hidden="true" />,
+    title: 'Fast Installation',
+    description: 'Quick setup and deployment',
+  },
+  {
+    icon: <VerifiedIcon sx={{ fontSize: 48 }} aria-hidden="true" />,
+    title: 'Genuine Spare Parts',
+    description: 'Only authentic components',
+  },
+];
 
+const TrustIndicators = () => {
   return (
     <Box
+      component="section"
+      aria-label="Why trust Surya Power"
       sx={{
         py: { xs: 6, md: 8 },
         backgroundColor: '#F5F7FA',
@@ -38,8 +40,8 @@ const TrustIndicators = () => {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          {indicators.map((indicator, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+          {indicators.map((indicator) => (
+            <Grid item xs={12} sm={6} md={3} key={indicator.title}>
               <Card
                 sx={{
                   textAlign: 'center',
@@ -53,7 +55,7 @@ const TrustIndicators = () => {
                 <CardContent sx={{ py: 4 }}>
                   <Box
                     sx={{
-                      color: '#FFC107',
+                      color: '#D84315',
                       mb: 2,
                       display: 'flex',
                       justifyContent: 'center',

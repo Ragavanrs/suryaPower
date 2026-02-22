@@ -62,13 +62,29 @@ const ContactForm = ({ defaultService = '' }) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      aria-labelledby="contact-form-heading"
+    >
+      <Typography
+        id="contact-form-heading"
+        variant="h5"
+        component="h2"
+        gutterBottom
+        sx={{ fontWeight: 600, mb: 3 }}
+      >
         Send us a Message
       </Typography>
 
+      {/* Required-field notice */}
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        Fields marked <abbr title="required">*</abbr> are required.
+      </Typography>
+
       {submitStatus && (
-        <Alert severity={submitStatus.type} sx={{ mb: 3 }}>
+        <Alert severity={submitStatus.type} sx={{ mb: 3 }} role="alert">
           {submitStatus.message}
         </Alert>
       )}
@@ -76,7 +92,8 @@ const ContactForm = ({ defaultService = '' }) => {
       <TextField
         fullWidth
         label="Full Name"
-        inputProps={{ 'aria-label': 'Full Name' }}
+        required
+        inputProps={{ 'aria-required': 'true' }}
         {...register('name', VALIDATION.name)}
         error={!!errors.name}
         helperText={errors.name?.message}
@@ -87,7 +104,8 @@ const ContactForm = ({ defaultService = '' }) => {
         fullWidth
         label="Phone Number"
         type="tel"
-        inputProps={{ 'aria-label': 'Phone Number' }}
+        required
+        inputProps={{ 'aria-required': 'true' }}
         {...register('phone', VALIDATION.phone)}
         error={!!errors.phone}
         helperText={errors.phone?.message}
@@ -99,7 +117,7 @@ const ContactForm = ({ defaultService = '' }) => {
         fullWidth
         label="Email Address"
         type="email"
-        inputProps={{ 'aria-label': 'Email Address' }}
+        inputProps={{ 'aria-required': 'false' }}
         {...register('email', VALIDATION.email)}
         error={!!errors.email}
         helperText={errors.email?.message}
@@ -107,7 +125,7 @@ const ContactForm = ({ defaultService = '' }) => {
         sx={{ mb: 3 }}
       />
 
-      <FormControl fullWidth sx={{ mb: 3 }} error={!!errors.service}>
+      <FormControl fullWidth sx={{ mb: 3 }} error={!!errors.service} required>
         <InputLabel id="service-label">Service Required</InputLabel>
         <Controller
           name="service"
@@ -115,7 +133,12 @@ const ContactForm = ({ defaultService = '' }) => {
           defaultValue={defaultService}
           rules={VALIDATION.service}
           render={({ field }) => (
-            <Select labelId="service-label" label="Service Required" {...field}>
+            <Select
+              labelId="service-label"
+              label="Service Required"
+              inputProps={{ 'aria-required': 'true' }}
+              {...field}
+            >
               {SERVICE_OPTIONS.map((option) => (
                 <MenuItem key={option} value={option}>
                   {option}
@@ -124,7 +147,7 @@ const ContactForm = ({ defaultService = '' }) => {
             </Select>
           )}
         />
-        {errors.service && <FormHelperText>{errors.service.message}</FormHelperText>}
+        {errors.service && <FormHelperText role="alert">{errors.service.message}</FormHelperText>}
       </FormControl>
 
       <TextField
@@ -132,7 +155,7 @@ const ContactForm = ({ defaultService = '' }) => {
         label="Message"
         multiline
         rows={4}
-        inputProps={{ 'aria-label': 'Message', maxLength: 500 }}
+        inputProps={{ 'aria-required': 'false', maxLength: 500 }}
         {...register('message', VALIDATION.message)}
         error={!!errors.message}
         helperText={errors.message?.message}
@@ -145,7 +168,8 @@ const ContactForm = ({ defaultService = '' }) => {
         variant="contained"
         fullWidth
         disabled={isSubmitting}
-        startIcon={isSubmitting ? <CircularProgress size={18} color="inherit" /> : <SendIcon />}
+        aria-disabled={isSubmitting}
+        startIcon={isSubmitting ? <CircularProgress size={18} color="inherit" aria-hidden="true" /> : <SendIcon aria-hidden="true" />}
         sx={{
           backgroundColor: '#D84315',
           color: '#FFFFFF',
@@ -154,7 +178,7 @@ const ContactForm = ({ defaultService = '' }) => {
           '&:hover': { backgroundColor: '#BF360C' },
         }}
       >
-        {isSubmitting ? 'Sending...' : 'Send Message'}
+        {isSubmitting ? 'Sending…' : 'Send Message'}
       </Button>
     </Box>
   );

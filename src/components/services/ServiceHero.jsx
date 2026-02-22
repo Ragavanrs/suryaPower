@@ -14,6 +14,7 @@ const ServiceHero = memo(({ title, subtitle }) => {
   return (
     <Box
       component="section"
+      aria-labelledby="service-hero-heading"
       sx={{
         backgroundColor: '#1C2B3A',
         py: { xs: 8, md: 10 },
@@ -23,6 +24,7 @@ const ServiceHero = memo(({ title, subtitle }) => {
     >
       <Container maxWidth="lg">
         <Typography
+          id="service-hero-heading"
           variant="h1"
           component="h1"
           gutterBottom

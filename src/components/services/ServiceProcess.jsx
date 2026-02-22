@@ -16,9 +16,15 @@ const ServiceProcess = ({ steps = [] }) => {
         <Grid container spacing={3} justifyContent="center">
           {steps.map((step, index) => (
             <Grid item xs={12} sm={6} md={4} key={step}>
-              <Card sx={{ textAlign: 'center', height: '100%' }}>
+              {/* aria-label gives screen readers "Step 1 of 5: Contact Us" */}
+              <Card
+                sx={{ textAlign: 'center', height: '100%' }}
+                aria-label={`Step ${index + 1} of ${steps.length}: ${step}`}
+              >
                 <CardContent sx={{ py: 4 }}>
+                  {/* Visual step number — hidden from AT (context is in Card's aria-label) */}
                   <Box
+                    aria-hidden="true"
                     sx={{
                       width: 48,
                       height: 48,

@@ -9,7 +9,7 @@ import { SITE_CONFIG } from '../../config/siteConfig';
 const ContactFormSection = () => {
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent('Hi! I need diesel generator service.');
-    window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -35,6 +35,7 @@ const ContactFormSection = () => {
                 <Typography
                   id="contact-section-heading"
                   variant="h5"
+                  component="h2"
                   gutterBottom
                   sx={{ fontWeight: 600, mb: 3 }}
                 >
@@ -42,7 +43,7 @@ const ContactFormSection = () => {
                 </Typography>
 
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
-                  <PhoneIcon sx={{ color: '#D84315', mr: 2, mt: 0.5 }} />
+                  <PhoneIcon sx={{ color: '#D84315', mr: 2, mt: 0.5 }} aria-hidden="true" />
                   <Box>
                     <Typography variant="body2" color="text.secondary">Phone</Typography>
                     <Typography variant="body1">
@@ -54,7 +55,7 @@ const ContactFormSection = () => {
                 </Box>
 
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 3 }}>
-                  <LocationOnIcon sx={{ color: '#D84315', mr: 2, mt: 0.5 }} />
+                  <LocationOnIcon sx={{ color: '#D84315', mr: 2, mt: 0.5 }} aria-hidden="true" />
                   <Box>
                     <Typography variant="body2" color="text.secondary">Address</Typography>
                     <Typography variant="body1">{SITE_CONFIG.address}</Typography>

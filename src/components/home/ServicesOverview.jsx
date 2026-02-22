@@ -24,7 +24,8 @@ const ServicesOverview = () => {
             <Grid item xs={12} sm={6} md={3} key={service.id} data-aos="fade-up" data-aos-delay={index * 100}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <CardContent sx={{ flexGrow: 1, p: 3, textAlign: 'center' }}>
-                  <Box sx={{ color: '#D84315', mb: 2, display: 'flex', justifyContent: 'center' }}>
+                  {/* Icon is decorative — the title and description convey meaning */}
+                  <Box sx={{ color: '#D84315', mb: 2, display: 'flex', justifyContent: 'center' }} aria-hidden="true">
                     {service.icon}
                   </Box>
                   <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 600 }}>
@@ -53,7 +54,7 @@ const ServicesOverview = () => {
                       '&:hover': { backgroundColor: '#BF360C' },
                     }}
                   >
-                    Learn More
+                    Learn more about {service.title}
                   </Button>
                 </Box>
               </Card>

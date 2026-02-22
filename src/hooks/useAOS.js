@@ -7,7 +7,20 @@ import 'aos/dist/aos.css';
 // rather than an inline literal if re-initialisation on change is needed.
 const useAOS = (options = {}) => {
   useEffect(() => {
-    AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-in-out', ...options });
+    // Disable animations for users who have requested reduced motion (WCAG 2.3.3)
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 80,
+      easing: 'ease-in-out',
+      ...options,
+      // Overrides any caller-supplied disable flag when reduced-motion is set
+      disable: prefersReducedMotion || options.disable || false,
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
