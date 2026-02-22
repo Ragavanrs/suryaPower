@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { Box, Container, Typography, Button } from '@mui/material';
+import PropTypes from 'prop-types';
 import PhoneIcon from '@mui/icons-material/Phone';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { SITE_CONFIG } from '../../config/siteConfig';
 
-const ServiceHero = ({ title, subtitle }) => {
-  const handleWhatsAppClick = () => {
+const ServiceHero = memo(({ title, subtitle }) => {
+  const handleWhatsAppClick = useCallback(() => {
     const message = encodeURIComponent(`Hi! I need help with: ${title}`);
     window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank');
-  };
+  }, [title]);
 
   return (
     <Box
@@ -69,6 +70,13 @@ const ServiceHero = ({ title, subtitle }) => {
       </Container>
     </Box>
   );
+});
+
+ServiceHero.displayName = 'ServiceHero';
+
+ServiceHero.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
 };
 
 export default ServiceHero;

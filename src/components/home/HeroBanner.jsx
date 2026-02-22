@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { Box, Container, Typography, Button, Grid, Chip } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -12,11 +12,11 @@ const trustBadges = [
   'All Chennai Covered',
 ];
 
-const HeroBanner = () => {
-  const handleWhatsAppClick = () => {
+const HeroBanner = memo(() => {
+  const handleWhatsAppClick = useCallback(() => {
     const message = encodeURIComponent('Hi! I need a quote for diesel generator service.');
     window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank');
-  };
+  }, []);
 
   return (
     <Box
@@ -135,6 +135,8 @@ const HeroBanner = () => {
       </Container>
     </Box>
   );
-};
+});
+
+HeroBanner.displayName = 'HeroBanner';
 
 export default HeroBanner;

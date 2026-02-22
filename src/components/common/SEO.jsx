@@ -1,12 +1,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import PropTypes from 'prop-types';
 import { SITE_CONFIG } from '../../config/siteConfig';
 
 const SEO = ({
   title = 'Diesel Generator Services in Chennai',
   description = 'Leading diesel generator service provider in Chennai. Generator Rental, Sales, Repair, AMC Maintenance. 24/7 support. Call 9790987190',
   keywords = 'diesel generator service chennai, generator rental chennai, kirloskar generator service chennai, dg service near me',
-  canonical = typeof window !== 'undefined' ? window.location.href : SITE_CONFIG.url,
+  canonical = SITE_CONFIG.url,
   ogImage = `${SITE_CONFIG.url}/og-image.jpg`,
   noIndex = false,
 }) => {
@@ -100,6 +101,15 @@ const SEO = ({
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
     </Helmet>
   );
+};
+
+SEO.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  keywords: PropTypes.string,
+  canonical: PropTypes.string,
+  ogImage: PropTypes.string,
+  noIndex: PropTypes.bool,
 };
 
 export default SEO;

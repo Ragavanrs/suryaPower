@@ -124,6 +124,9 @@ const theme = createTheme({
           borderRadius: 8,
           padding: '10px 28px',
           fontWeight: 700,
+          // Shadow is intentionally 'none' at rest per the Surya Power design spec
+          // (Section 6: MuiButton override). A prominent lift shadow is applied on hover
+          // to preserve visual affordance without cluttering the default state.
           boxShadow: 'none',
           transition: 'all 0.3s ease',
           '&:hover': {

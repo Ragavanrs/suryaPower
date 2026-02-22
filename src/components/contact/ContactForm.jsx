@@ -14,10 +14,13 @@ import {
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useForm, Controller } from 'react-hook-form';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import contactService from '../../api/contactService';
+import analytics from '../../utils/analytics';
+import { VALIDATION } from '../../utils/validators';
 import { SITE_CONFIG } from '../../config/siteConfig';
 
-const SERVICE_OPTIONS = [
+export const SERVICE_OPTIONS = [
   'Generator Rental',
   'Generator Sales',
   'Generator Repair / Breakdown',
@@ -27,7 +30,7 @@ const SERVICE_OPTIONS = [
   'Other',
 ];
 
-const ContactForm = () => {
+const ContactForm = ({ defaultService = '' }) => {
   const {
     register,
     handleSubmit,
@@ -43,10 +46,12 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
     try {
-      await axios.post('/api/contact', data);
-      setSubmitStatus({ type: 'success', message: '✅ Thank you! We\'ll contact you within 2 hours.' });
+      await contactService.submitContact(data);
+      analytics.trackEvent('contact_form_submit', { service: data.service });
+      setSubmitStatus({ type: 'success', message: "✅ Thank you! We'll contact you within 2 hours." });
       reset();
-    } catch {
+    } catch (error) {
+      console.error('[ContactForm] Submission failed:', error);
       setSubmitStatus({
         type: 'error',
         message: `Something went wrong. Please call us directly at ${SITE_CONFIG.phoneDisplay}.`,
@@ -72,10 +77,7 @@ const ContactForm = () => {
         fullWidth
         label="Full Name"
         inputProps={{ 'aria-label': 'Full Name' }}
-        {...register('name', {
-          required: 'Name is required',
-          minLength: { value: 2, message: 'Name must be at least 2 characters' },
-        })}
+        {...register('name', VALIDATION.name)}
         error={!!errors.name}
         helperText={errors.name?.message}
         sx={{ mb: 3 }}
@@ -86,13 +88,7 @@ const ContactForm = () => {
         label="Phone Number"
         type="tel"
         inputProps={{ 'aria-label': 'Phone Number' }}
-        {...register('phone', {
-          required: 'Phone number is required',
-          pattern: {
-            value: /^[6-9]\d{9}$/,
-            message: 'Enter a valid Indian mobile number (10 digits starting with 6–9)',
-          },
-        })}
+        {...register('phone', VALIDATION.phone)}
         error={!!errors.phone}
         helperText={errors.phone?.message}
         placeholder="e.g., 9790987190"
@@ -104,12 +100,7 @@ const ContactForm = () => {
         label="Email Address"
         type="email"
         inputProps={{ 'aria-label': 'Email Address' }}
-        {...register('email', {
-          pattern: {
-            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: 'Enter a valid email address',
-          },
-        })}
+        {...register('email', VALIDATION.email)}
         error={!!errors.email}
         helperText={errors.email?.message}
         placeholder="Optional"
@@ -121,8 +112,8 @@ const ContactForm = () => {
         <Controller
           name="service"
           control={control}
-          defaultValue=""
-          rules={{ required: 'Please select a service' }}
+          defaultValue={defaultService}
+          rules={VALIDATION.service}
           render={({ field }) => (
             <Select labelId="service-label" label="Service Required" {...field}>
               {SERVICE_OPTIONS.map((option) => (
@@ -142,9 +133,7 @@ const ContactForm = () => {
         multiline
         rows={4}
         inputProps={{ 'aria-label': 'Message', maxLength: 500 }}
-        {...register('message', {
-          maxLength: { value: 500, message: 'Message must be 500 characters or less' },
-        })}
+        {...register('message', VALIDATION.message)}
         error={!!errors.message}
         helperText={errors.message?.message}
         placeholder="Tell us about your requirements..."
@@ -169,6 +158,11 @@ const ContactForm = () => {
       </Button>
     </Box>
   );
+};
+
+ContactForm.propTypes = {
+  /** Pre-select a service option (e.g. when linked from a service page) */
+  defaultService: PropTypes.string,
 };
 
 export default ContactForm;

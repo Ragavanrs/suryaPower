@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Typography, Divider } from '@mui/material';
+import PropTypes from 'prop-types';
 
-const SectionTitle = ({ overline, title, subtitle, align = 'center', sx = {} }) => {
+const SectionTitle = memo(({ overline, title, subtitle, align = 'center', sx = {} }) => {
   return (
     <Box sx={{ mb: 6, textAlign: align, ...sx }}>
       {overline && (
@@ -31,6 +32,16 @@ const SectionTitle = ({ overline, title, subtitle, align = 'center', sx = {} }) 
       )}
     </Box>
   );
+});
+
+SectionTitle.displayName = 'SectionTitle';
+
+SectionTitle.propTypes = {
+  overline: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  align: PropTypes.oneOf(['left', 'center', 'right']),
+  sx: PropTypes.object,
 };
 
 export default SectionTitle;

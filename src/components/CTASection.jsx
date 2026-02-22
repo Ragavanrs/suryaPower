@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { Box, Container, Typography, Button, Grid } from '@mui/material';
+import PropTypes from 'prop-types';
 import PhoneIcon from '@mui/icons-material/Phone';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { SITE_CONFIG } from '../config/siteConfig';
 
-const CTASection = ({ title, subtitle, showButtons = true, backgroundColor = '#1F2937' }) => {
-  const handleCallClick = () => {
-    window.location.href = 'tel:+919790987190';
-  };
+const CTASection = memo(({ title, subtitle, showButtons = true, backgroundColor = '#1C2B3A' }) => {
+  const handleCallClick = useCallback(() => {
+    window.location.href = `tel:${SITE_CONFIG.phone}`;
+  }, []);
 
-  const handleWhatsAppClick = () => {
-    const phoneNumber = '919790987190';
+  const handleWhatsAppClick = useCallback(() => {
     const message = encodeURIComponent('Hi! I need diesel generator service.');
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-  };
+    window.open(`https://wa.me/${SITE_CONFIG.whatsapp}?text=${message}`, '_blank');
+  }, []);
 
   return (
     <Box
@@ -97,6 +98,15 @@ const CTASection = ({ title, subtitle, showButtons = true, backgroundColor = '#1
       </Container>
     </Box>
   );
+});
+
+CTASection.displayName = 'CTASection';
+
+CTASection.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  showButtons: PropTypes.bool,
+  backgroundColor: PropTypes.string,
 };
 
 export default CTASection;

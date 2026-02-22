@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import SectionTitle from '../common/SectionTitle';
 
@@ -29,7 +29,7 @@ const reasons = [
   },
 ];
 
-const WhyChooseUs = () => {
+const WhyChooseUs = memo(() => {
   return (
     <Box
       component="section"
@@ -61,6 +61,8 @@ const WhyChooseUs = () => {
       </Container>
     </Box>
   );
-};
+});
+
+WhyChooseUs.displayName = 'WhyChooseUs';
 
 export default WhyChooseUs;

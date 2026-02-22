@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import SectionTitle from '../common/SectionTitle';
 
-const ServiceBenefits = ({ benefits = [] }) => {
+const ServiceBenefits = memo(({ benefits = [] }) => {
   return (
     <Box
       component="section"
@@ -26,6 +27,12 @@ const ServiceBenefits = ({ benefits = [] }) => {
       </Container>
     </Box>
   );
+});
+
+ServiceBenefits.displayName = 'ServiceBenefits';
+
+ServiceBenefits.propTypes = {
+  benefits: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ServiceBenefits;
