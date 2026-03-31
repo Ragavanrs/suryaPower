@@ -18,6 +18,9 @@ const GeneratorRepair = lazy(() => import("./pages/services/GeneratorRepair"));
 const GeneratorAMC = lazy(() => import("./pages/services/GeneratorAMC"));
 const GeneratorSales = lazy(() => import("./pages/services/GeneratorSales"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const GeneratorForRentChennai = lazy(() => import("./pages/seo/GeneratorForRentChennai"));
+const UsedGeneratorForSaleChennai = lazy(() => import("./pages/seo/UsedGeneratorForSaleChennai"));
+const GeneratorAmcServiceChennai = lazy(() => import("./pages/seo/GeneratorAmcServiceChennai"));
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
                   <Route path="/services/sales" element={<GeneratorSales />} />
                   <Route path="/contact" element={<ContactPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />
+                  <Route path="/generator-for-rent-chennai" element={<GeneratorForRentChennai />} />
+                  <Route path="/used-generator-for-sale-chennai" element={<UsedGeneratorForSaleChennai />} />
+                  <Route path="/generator-amc-service-chennai" element={<GeneratorAmcServiceChennai />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>

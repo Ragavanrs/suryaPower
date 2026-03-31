@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { SITE_CONFIG } from '../../config/siteConfig';
 
 const trustBadges = [
-  '15+ Years Experience',
+  '20+ Years Experience',
   '24/7 Emergency Service',
   '500+ Clients Served',
   'All Chennai Covered',
@@ -66,7 +66,7 @@ const HeroBanner = memo(() => {
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
               }}
             >
-              Reliable Diesel Generator Services in Chennai
+              Chennai's Most Trusted Generator Partner — Sales, Hire &amp; Service
             </Typography>
 
             <Typography
@@ -78,7 +78,7 @@ const HeroBanner = memo(() => {
                 fontSize: { xs: '1.1rem', md: '1.3rem' },
               }}
             >
-              Sales | Rental | Repair | AMC Support
+              20+ Years | All Brands | All KVA Sizes | Same Day Service
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>

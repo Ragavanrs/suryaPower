@@ -20,7 +20,7 @@ const ServicesPage = () => {
       icon: <LocalShippingIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Generator Rental',
       description: 'Flexible rental solutions for temporary power backup needs',
-      path: '/services/rental',
+      path: '/generator-for-rent-chennai',
       details: [
         'All capacities: 5kVA to 1250kVA',
         'Short-term and long-term rental options',
@@ -34,7 +34,7 @@ const ServicesPage = () => {
       icon: <BuildIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Generator Sales',
       description: 'New and refurbished diesel generators from trusted brands',
-      path: '/services/sales',
+      path: '/used-generator-for-sale-chennai',
       details: [
         'Kirloskar generators',
         'Cummins generators',
@@ -62,7 +62,7 @@ const ServicesPage = () => {
       icon: <AssignmentIcon sx={{ fontSize: 80, color: '#D84315' }} />,
       title: 'Annual Maintenance Contract',
       description: 'Comprehensive AMC packages for worry-free operation',
-      path: '/services/amc',
+      path: '/generator-amc-service-chennai',
       details: [
         'Regular preventive maintenance',
         'Priority breakdown service',
